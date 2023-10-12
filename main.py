@@ -25,9 +25,9 @@ def addtask():
 
 def displaytask():
     # enumerate to iterate two variables in the list. One for the task and other for the number of the task
-    for index,task in enumerate(mytasks):
-        print(index+1,") ",task.title,sep='')
-        print("  ",task.description,"|",task.status)
+    for index,todo in enumerate(mytasks):
+        print(index+1,") "todo.title,sep='')
+        print("  ",todo.description,"|",todo.status)
 
 
 def completetask():
