@@ -10,7 +10,14 @@ mytasks = []
 def strike(text):
     result = ''
     for c in text:
-        result = result + c + '\u0336'
+        result += + c + '\u0336'
+    return result
+
+def remove_strike(text):
+    result = ''
+    for char in text:
+        if char != '\u0336':
+            result += char
     return result
 
 
@@ -61,6 +68,27 @@ def completetask():
         index = index - 1 # mytasks index 0 will be the task number 1. So subtracting 1 from index
         mytasks[index].status = "Complete"
         mytasks[index].description = strike(mytasks[index].description)
+
+def pendingtask():
+
+    if len(mytasks)==0:
+        return 0 #Using return here to stop the function if there are no existing tasks
+
+    while True:
+        try:
+            index = int(input("\nEnter the task number which is pending: "))
+        except ValueError:
+            print("Invalid Input")
+            continue
+        break
+
+    if index<=0 or index>len(mytasks):
+        print("Invalid Index")
+        
+    else:
+        index = index - 1 # mytasks index 0 will be the task number 1. So subtracting 1 from index
+        mytasks[index].status = "Pending"
+        mytasks[index].description = remove_strike(mytasks[index].description)
 
 def deletetask():
 
@@ -126,10 +154,11 @@ while True:
     print("1. Add Task")  
     print("2. Display All Tasks")  
     print("3. Mark Task As Completed")  
-    print("4. Delete Task")
-    print("5. Save")
-    print("6. Load")
-    print("7. Exit\n")
+    print("4. Mark Task As Pending")  
+    print("5. Delete Task")
+    print("6. Save")
+    print("7. Load")
+    print("8. Exit\n")
 
     choice = input("Enter the Choice: ")
     print()
@@ -146,22 +175,27 @@ while True:
         displaytask()
         completetask()
         continue
-    
+
     elif choice == '4':
+        displaytask()
+        pendingtask()
+        continue
+    
+    elif choice == '5':
         displaytask()
         deletetask()
         continue
 
-    elif choice =='5':
+    elif choice =='6':
         save()
         continue
 
-    elif choice =='6':
+    elif choice =='7':
         mytasks = []  #emptying the current tasks so we can replace it with the loaded tasks
         load()
         continue
 
-    elif choice =='7':
+    elif choice =='8':
         break
 
     else:
